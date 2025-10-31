@@ -9,7 +9,7 @@ Key steps I've done:
 - split data into train and test sets,
 - created a classifier, but also tested which parameters will fit it the best and later on visualized the results,
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 - tested quality metrics such as precision, f1-score, recall to check if the model predicts correctly and doesn't make random guesses,
 
@@ -25,11 +25,11 @@ Confusion Matrix:
 
 - loop-checked if changing test sizes will affect the model predictions,
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 - visualized ROC and 2-class Precision-Recall curves,
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 side notes:
 - the notebook has most of the explanation included after each major computation,
@@ -54,11 +54,11 @@ weighted avg       0.82      0.75      0.71         8
 
 - bar chart has shown data from the most to least significant
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 - visualized ROC curve 
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 
 # 3. Logistic Regression
@@ -73,15 +73,15 @@ Key steps:
     - 0 = average,
     - +2 = 2 SD above average)
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 - results from 2nd approach show basically the same curves as in previous the plots, but we also have the AUC and precision values
 
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
-![alt text](image-7.png)
+![alt text](images/image-7.png)
 
-![alt text](image-8.png)
+![alt text](images/image-8.png)
 
 Finally, results from the Random Forest bar chart resemble Logistic Regression curves and explain steepness and range of each significant one. Inscribed circle radius, Heart area and Heart perimeter which contribute to the classification the most.
 
