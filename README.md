@@ -1,108 +1,91 @@
-# Recruitment Task – Classification of a Heart with Hypertrophic Cardiomyopathy (Cardiomegaly)
+## AI_MED Recruitment Project
 
-## Task Description
+Below are three models that I created for classifying if the heart is healthy given certain semi-correlated parameters.
 
-Your task is to prepare a solution for the **classification problem** of detecting **hypertrophic cardiomyopathy (cardiomegaly)** based on the provided features.  
-You should use one of the **classical machine learning methods** described in the [ML.md](ML.md) file.  
+# 1. Decision Trees
 
-The goal is to build a model capable of correctly distinguishing between a **healthy heart** and a **diseased heart** using the available data.
+Key steps I've done:
+- loaded, cleaned and processed the data, so the numeric values are consistent and meaningful characteristics stay in one place,
+- split data into train and test sets,
+- created a classifier, but also tested which parameters will fit it the best and later on visualized the results,
 
-The repository contains a dataset stored in a **CSV** file, which includes selected geometric and imaging features used as the basis for further analysis.  
-We expect the candidate to prepare code that:
+![alt text](image-2.png)
 
-1. Loads the data from the `task_data.csv` file.  
-2. Splits the data into training and test sets.  
-3. Performs preprocessing (e.g., standardization, normalization, etc.).  
-4. Trains one or more selected models.  
-5. Evaluates the solution using [cross-validation](https://www.geeksforgeeks.org/machine-learning/cross-validation-using-k-fold-with-scikit-learn/).  
-6. Evaluates the solution on the test dataset (e.g., using accuracy, precision, recall, F1-score).  
-7. Provides a brief description of the chosen approach.
+- tested quality metrics such as precision, f1-score, recall to check if the model predicts correctly and doesn't make random guesses,
 
----
+```
+Recall:  1.0
+Accuracy:  0.9166666666666666
+F1-score:  0.9473684210526315
+Precision:  0.9
+Confusion Matrix: 
+ [[2 1]
+ [0 9]]
+```
 
-## Data (CSV)
+- loop-checked if changing test sizes will affect the model predictions,
 
-The first column contains a **photo ID**, and the second column indicates whether the heart was diagnosed with cardiomegaly:  
-- `1` – positive diagnosis (diseased heart)  
-- `0` – negative diagnosis (healthy heart)  
+![alt text](image-3.png)
 
-Below are the features describing the heart and lungs. Each feature includes its name (as used in the CSV file).
+- visualized ROC and 2-class Precision-Recall curves,
 
----
+![alt text](image-4.png)
 
-### Lung width
+side notes:
+- the notebook has most of the explanation included after each major computation,
+- this is my most "Run All"ed and tested solution, so there might be slight discrepancies between the numbers, but I kept the reasoning consitent so it sticks to the main idea.
 
-The horizontal distance between the outermost points of the lungs.
+I am skipping the setup part when describing next models, because it's basically the same throughout them all.
 
-### Heart width
+# 2. Random Forest
 
-The maximum horizontal width of the heart.
+Key steps:
+- created 2 RF classfiers to check if default parameters will work better than the initialized ones, but the classification report has shown basically no difference,
+```  
+precision    recall  f1-score   support
 
-### CR ratio
+           0       1.00      0.33      0.50         3
+           1       0.71      1.00      0.83         5
 
-The ratio of heart width to lung width.
+    accuracy                           0.75         8
+   macro avg       0.86      0.67      0.67         8
+weighted avg       0.82      0.75      0.71         8 
+```
 
-### Inertia tensors
+- bar chart has shown data from the most to least significant
 
-Metrics describing the distribution of heart and lung pixels relative to the coordinate axes, capturing the shape and orientation of the objects.  
-The `.csv` file contains four components of this feature:
+![alt text](image.png)
 
-* `xx` – distribution of pixels relative to the y-axis (elongation along x)  
-* `yy` – distribution of pixels relative to the x-axis (elongation along y)  
-* `xy` – distribution relative to both x and y axes (a high value indicates object rotation)  
-* `normalized_diff` – a scalar value derived from the vector whose components are described above  
+- visualized ROC curve 
 
-### Inscribed circle radius
+![alt text](image-1.png)
 
-The radius of the largest circle that can be inscribed within the heart area, describing its symmetry and compactness.
 
-### Polygon area ratio
+# 3. Logistic Regression
 
-The ratio of the area of the polygon enclosing the heart contour to the actual heart area.
+This is the part when we see that the models play the same game and similarities in results start to appear.
 
-### Heart perimeter
+Key steps:
+- included StandardScalar, because the data has to be regularized at some point
+- divided the solution into two approaches: 1 - finding significant features when the model considers them all at the same time; 2 - working on the features seperately (in other words - one model per feature)
+- in approach 1 I included PartialDependenceDisplay to show how much each feature acutally changes the prediction - even when others are involved (the x-axes show values in standard deviation units: 
+    - -2 = 2 SD below average,
+    - 0 = average,
+    - +2 = 2 SD above average)
 
-The length of the heart contour.
+![alt text](image-5.png)
 
-### Heart area
+- results from 2nd approach show basically the same curves as in previous the plots, but we also have the AUC and precision values
 
-The area occupied by the heart.
+![alt text](image-6.png)
 
-### Lung area
+![alt text](image-7.png)
 
-The area occupied by the lungs.
+![alt text](image-8.png)
 
----
+Finally, results from the Random Forest bar chart resemble Logistic Regression curves and explain steepness and range of each significant one. Inscribed circle radius, Heart area and Heart perimeter which contribute to the classification the most.
 
-## Expectations
-
-* The code should be written in **Python** (e.g., using libraries such as `scikit-learn`, `numpy`, `pandas`, `matplotlib`).  
-* Include a short description of the solution in a **Markdown** (`.md`) file.  
-* Present evaluation results clearly (e.g., results table, ROC/PR curves).  
-* Code and commit messages should be written in **English**.  
-  The Markdown description may be written in either **Polish** or **English**.  
-
-To complete the task, please [Fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) this repository and submit the link to your fork **in your recruitment form**.
-
-We recommend using **Jupyter Notebooks** for the implementation.
-
----
-
-## Example model
-
-In the [Example](Example/) folder, you will find a fully implemented machine learning project that demonstrates the entire workflow — from data loading and preprocessing to model training, evaluation, and final conclusions.
-This example is designed to help beginner machine learning enthusiasts understand the structure of a complete project. It contains all the necessary information and practical guidance needed to successfully complete the recruitment task.
-
----
-
-## Evaluation Criteria
-
-* Correctness of the code.  
-* Clarity and readability of the implementation.  
-* Use of classical machine learning methods.  
-* Creativity of the solution.  
-* **Commit history in the repository** – clarity and consistency will also be evaluated.
-
----
-
-**Good luck!**
+Final thoughts: 
+- Looking back at Decision Trees, we clearly can see that some nodes don't quite match the features mentioned above, but it might be expectable as the dataset is reall small and a little imbalance might appear at some point. 
+- Dataset size also play role when it comes to quality metrics, because they are sometimes very positive, but sometimes their value drops by a bit. 
+- Nonetheless, three of those classification models seem to be working along quite nicely as they present very simillar results and predict with an accuracy much bigger than random guessing.
