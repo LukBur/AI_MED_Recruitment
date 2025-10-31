@@ -1,6 +1,6 @@
 ## AI_MED Recruitment Project
 
-Below are three models that I created for classifying if the heart is healthy given certain semi-correlated parameters.
+Below are three models (Decision Trees, Random Forest, Logistic Regression) that I created for classifying if a heart is cardiomegalic, given certain geometric measurements.
 
 # 1. Decision Trees
 
@@ -63,12 +63,10 @@ weighted avg       0.82      0.75      0.71         8
 
 # 3. Logistic Regression
 
-This is the part when we see that the models play the same game and similarities in results start to appear.
-
 Key steps:
 - applied StandardScalar to standarize all features,
-- divided the solution into two approaches: 1 - finding significant features when the model considers them all at the same time; 2 - working on the features seperately (in other words - one model per feature)
-- in approach 1 I included PartialDependenceDisplay to show how much each feature acutally changes the prediction - even when others are involved (the x-axes show values in standard deviation units: 
+- divided the solution into two approaches: 1 - finding significant features when the model uses them all at the same time; 2 - working on the features seperately (in other words - one model per feature)
+- in approach 1 I included PartialDependenceDisplay to show how much each feature acutally changes the prediction - even when others are involved (the x-axes show values in standard deviation units): 
     - -2 = 2 SD below average,
     - 0 = average,
     - +2 = 2 SD above average)
@@ -83,9 +81,9 @@ Key steps:
 
 ![alt text](images/image-8.png)
 
-Finally, results from the Random Forest bar chart resemble Logistic Regression curves and explain steepness and range of each significant one. Inscribed circle radius, Heart area and Heart perimeter which contribute to the classification the most.
+Finally, results from the Random Forest bar chart resemble Logistic Regression curves and explain steepness and range of each significant one. Inscribed circle radius, Heart area and Heart perimeter contribute to the classification the most.
 
 Final thoughts: 
-- Looking back at Decision Trees, we clearly can see that some nodes don't quite match the features mentioned above, but it might be expectable as the dataset is reall small and a little imbalance might appear at some point. 
+- Looking back at Decision Trees, we clearly can see that some nodes don't quite match the features mentioned above, but it might be expectable as the dataset is really small and a little imbalance might appear at some point. 
 - Dataset size also play role when it comes to quality metrics, because they are sometimes very positive, but sometimes their value drops by a bit. 
-- Nonetheless, three of those classification models seem to be working along quite nicely as they present very simillar results and predict with an accuracy much bigger than random guessing.
+- All three classification models - Decision Tree, Random Forest, Logistic Regression - present very similar results and achieve much higher accuracy than random guessing.
