@@ -66,7 +66,7 @@ weighted avg       0.82      0.75      0.71         8
 This is the part when we see that the models play the same game and similarities in results start to appear.
 
 Key steps:
-- included StandardScalar, because the data has to be regularized at some point
+- applied StandardScalar to standarize all features,
 - divided the solution into two approaches: 1 - finding significant features when the model considers them all at the same time; 2 - working on the features seperately (in other words - one model per feature)
 - in approach 1 I included PartialDependenceDisplay to show how much each feature acutally changes the prediction - even when others are involved (the x-axes show values in standard deviation units: 
     - -2 = 2 SD below average,
